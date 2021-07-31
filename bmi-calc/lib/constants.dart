@@ -6,9 +6,13 @@ const kLabelTextStyle = TextStyle(
   fontSize: 18.0,
   color: Color(0xFF8D8E98),
 );
-const kLabelTextStyleLarge = TextStyle(
+const kNumberTextStyle = TextStyle(
   fontSize: 50.0,
   fontWeight: FontWeight.w900,
 );
 const kMinHeight = 120.0;
 const kMaxHeight = 220.0;
+const kMinWeight = 30.0;
+const kMaxWeight = 200.0;
+const kMinAge = 17.0;
+const kMaxAge = 90.0;
