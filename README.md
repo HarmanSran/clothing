@@ -2,7 +2,7 @@
 
 Various Flutter apps I've built for learning purposes.
 
-Each directory contains a different working app.
+Each directory contains a different working mobile app.
 
 See Readme in each directory for more information.
 
