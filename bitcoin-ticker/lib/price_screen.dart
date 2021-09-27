@@ -1,4 +1,5 @@
 import 'package:bitcoin_ticker/coin_data.dart';
+import 'package:bitcoin_ticker/currency_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,70 +27,21 @@ class _PriceScreenState extends State<PriceScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-              child: Card(
-                color: Colors.lightBlueAccent,
-                elevation: 5.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                  child: Text(
-                    '1 BTC = ${exchangeRateBTC != null ? exchangeRateBTC : '?'} $selectedCurrency',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+            CurrencyTile(
+              crypto: 'BTC',
+              currency: selectedCurrency,
+              exchangeRate: exchangeRateBTC,
             ),
-            Padding(
-                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-                child: Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: Text(
-                      '1 ETH = ${exchangeRateETH != null ? exchangeRateETH : '?'} $selectedCurrency',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-                child: Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: Text(
-                      '1 LTC = ${exchangeRateLTC != null ? exchangeRateLTC : '?'} $selectedCurrency',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                )),
+            CurrencyTile(
+              crypto: 'ETH',
+              currency: selectedCurrency,
+              exchangeRate: exchangeRateETH,
+            ),
+            CurrencyTile(
+              crypto: 'LTC',
+              currency: selectedCurrency,
+              exchangeRate: exchangeRateLTC,
+            ),
           ]),
           Container(
             height: 150.0,
@@ -105,7 +57,7 @@ class _PriceScreenState extends State<PriceScreen> {
               onChanged: (newCurrency) async {
                 for (String crypto in cryptoList) {
                   var coinExchangeRate =
-                      await coinData.getCoinExchangeRate(crypto, newCurrency);
+                      await coinData.getCoinData(crypto, newCurrency);
                   setState(() {
                     selectedCurrency = newCurrency;
                     if (crypto == 'BTC') {

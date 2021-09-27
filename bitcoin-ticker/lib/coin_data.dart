@@ -36,7 +36,7 @@ const apiKey = 'TODO';
 const baseUrl = 'https://rest.coinapi.io/v1/exchangerate';
 
 class CoinData {
-  Future<dynamic> getCoinExchangeRate(String crypto, String currency) async {
+  Future<dynamic> getCoinData(String crypto, String currency) async {
     String url = "$baseUrl/$crypto/$currency?apikey=$apiKey";
     NetworkHelper networkHelper = NetworkHelper(url);
     var cryptoCurrencyData = await networkHelper.getData();
