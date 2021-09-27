@@ -12,9 +12,7 @@ class _PriceScreenState extends State<PriceScreen> {
   CoinData coinData = CoinData();
 
   String selectedCurrency = 'USD';
-  int exchangeRateBTC;
-  int exchangeRateETH;
-  int exchangeRateLTC;
+  Map<String, int> exchangeRates = new Map();
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +24,16 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            CurrencyTile(
-              crypto: 'BTC',
-              currency: selectedCurrency,
-              exchangeRate: exchangeRateBTC,
-            ),
-            CurrencyTile(
-              crypto: 'ETH',
-              currency: selectedCurrency,
-              exchangeRate: exchangeRateETH,
-            ),
-            CurrencyTile(
-              crypto: 'LTC',
-              currency: selectedCurrency,
-              exchangeRate: exchangeRateLTC,
-            ),
-          ]),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: cryptoList
+                .map((crypto) => CurrencyTile(
+                      crypto: crypto,
+                      currency: selectedCurrency,
+                      exchangeRate: exchangeRates[crypto],
+                    ))
+                .toList(),
+          ),
           Container(
             height: 150.0,
             alignment: Alignment.center,
@@ -60,19 +51,9 @@ class _PriceScreenState extends State<PriceScreen> {
                       await coinData.getCoinData(crypto, newCurrency);
                   setState(() {
                     selectedCurrency = newCurrency;
-                    if (crypto == 'BTC') {
-                      exchangeRateBTC = coinExchangeRate != null
-                          ? coinExchangeRate['rate'].toInt()
-                          : null;
-                    } else if (crypto == 'ETH') {
-                      exchangeRateETH = coinExchangeRate != null
-                          ? coinExchangeRate['rate'].toInt()
-                          : null;
-                    } else if (crypto == 'LTC') {
-                      exchangeRateLTC = coinExchangeRate != null
-                          ? coinExchangeRate['rate'].toInt()
-                          : null;
-                    }
+                    exchangeRates[crypto] = coinExchangeRate != null
+                        ? coinExchangeRate['rate'].toInt()
+                        : null;
                   });
                 }
               },
