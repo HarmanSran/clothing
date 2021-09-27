@@ -1,4 +1,4 @@
-import 'package:bitcoin_ticker/services/networking.dart';
+import 'package:bitcoin_ticker/networking.dart';
 
 const List<String> currenciesList = [
   'AUD',
@@ -31,7 +31,7 @@ const List<String> cryptoList = [
 ];
 
 // Get apikey from https://www.coinapi.io/
-const apiKey = 'ENTER-API-KEY-HERE';
+const apiKey = 'TODO';
 
 const baseUrl = 'https://rest.coinapi.io/v1/exchangerate';
 
