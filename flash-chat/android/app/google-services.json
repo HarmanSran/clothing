@@ -20,6 +20,7 @@
       ],
       "api_key": [
         {
+          "README": "Remove this README field before using - the Firebase project has been deleted, so this key won't work",
           "current_key": "AIzaSyA5_nsB-XmCzir4RuiruZl5OAKDIA9vZMc"
         }
       ],
