@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
+  String messageText;
 
   @override
   void initState() {
@@ -52,6 +55,31 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightBlueAccent,
+                    ),
+                  );
+                }
+                final messages = snapshot.data.docs;
+                List<Text> messageWidgets = [];
+                for (var msg in messages) {
+                  final messageText = msg['text'];
+                  final messageSender = msg['sender'];
+
+                  final messageWidget =
+                      Text('$messageText from $messageSender');
+                  messageWidgets.add(messageWidget);
+                }
+                return Column(
+                  children: messageWidgets,
+                );
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -60,14 +88,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        messageText = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      _firestore.collection('messages').add({
+                        'sender': loggedInUser.email,
+                        'text': messageText,
+                      });
                     },
                     child: Text(
                       'Send',
