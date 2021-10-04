@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:todoey/models/task.dart';
 
 class TaskData extends ChangeNotifier {
-  List<Task> _tasks = [
+  final List<Task> _tasks = [
     Task(name: 'Buy milk'),
     Task(name: 'Buy eggs'),
   ];
@@ -24,6 +24,11 @@ class TaskData extends ChangeNotifier {
 
   void updateTask(Task task) {
     task.toggleDone();
+    notifyListeners();
+  }
+
+  void deleteTask(int index) {
+    _tasks.removeAt(index);
     notifyListeners();
   }
 }

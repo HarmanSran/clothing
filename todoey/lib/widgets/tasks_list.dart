@@ -16,6 +16,7 @@ class TasksList extends StatelessWidget {
             isChecked: taskData.tasks[index].isDone,
             taskTitle: taskData.tasks[index].name,
             onToggle: (newValue) => taskData.updateTask(taskData.tasks[index]),
+            onLongPress: () => taskData.deleteTask(index),
           );
         },
       );
