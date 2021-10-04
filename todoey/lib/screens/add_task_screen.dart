@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
   String text = '';
-  final Function addTask;
 
   AddTaskScreen({
     Key? key,
-    required this.addTask,
   }) : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class AddTaskScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                addTask(text);
+                Provider.of<TaskData>(context, listen: false).addTask(text);
                 Navigator.pop(context);
               },
               child: const Text('Add'),
