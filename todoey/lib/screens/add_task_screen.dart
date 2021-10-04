@@ -20,7 +20,7 @@ class AddTaskScreen extends StatelessWidget {
                 color: Colors.lightBlueAccent,
               ),
             ),
-            TextField(
+            const TextField(
               autofocus: true,
               textAlign: TextAlign.center,
             ),
